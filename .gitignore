@@ -27,3 +27,7 @@ temp/
 *.bak
 *.old
 *.tmp
+
+#vscode
+
+.vscode/
