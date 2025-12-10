@@ -1,0 +1,29 @@
+# Environment
+.env
+*.env
+.env.*
+
+# Secrets
+secrets.*
+*.key
+*.pem
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp & cache
+tmp/
+temp/
+.cache/
+*.swp
+*.swo
+
+# General backups
+*.bak
+*.old
+*.tmp
