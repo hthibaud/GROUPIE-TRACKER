@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+
+	handlers "GROUPIE-TRACKER/internal/handlers"
 )
 
 func main() {
