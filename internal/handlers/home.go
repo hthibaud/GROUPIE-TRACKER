@@ -16,7 +16,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func renderTemplate(w http.ResponseWriter, filename string) {
-	t, err := template.ParseFiles("../web/templates/" + filename)
+	t, err := template.ParseFiles("web/templates/" + filename)
 	if err != nil {
 		http.Error(w, "Erreur de template: "+err.Error(), http.StatusInternalServerError)
 		return
