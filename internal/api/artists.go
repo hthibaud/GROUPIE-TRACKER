@@ -1,0 +1,5 @@
+package artists
+
+func artists() {
+	
+}
