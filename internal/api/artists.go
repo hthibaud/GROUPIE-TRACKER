@@ -1,5 +1,5 @@
 package artists
 
-func artists() {
-	
+func GetArtists() {
+
 }
