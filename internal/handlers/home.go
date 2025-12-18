@@ -3,6 +3,8 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+
+	"GROUPIE-TRACKER/internal/api"
 )
 
 // prepare handler function permite switch enter the all page of the website
@@ -18,6 +20,8 @@ func Handler() {
 	http.HandleFunc("/artists", Artists)
 	http.HandleFunc("/locations", Locations)
 	http.HandleFunc("/gimstroll", Gimstroll)
+	fs := http.FileServer(http.Dir("web/assets"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 }
 
 // init template index.html
@@ -32,7 +36,21 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 
 // init template artists.html
 func Artists(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "artists.html")
+    artists, err := api.GetArtists()
+    if err != nil {
+        http.Error(w, "Erreur serveur", http.StatusInternalServerError)
+        return
+    }
+
+    tmpl, err := template.ParseFiles(
+        "web/templates/artists.html",
+    )
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+    tmpl.Execute(w, artists)
 }
 
 // init template locations.html
