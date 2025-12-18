@@ -7,7 +7,13 @@ import (
 
 // prepare handler function permite switch enter the all page of the website
 func Handler() {
-	http.HandleFunc("/", Home)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" {
+			Home(w, r)
+			return
+		}
+		NotFound(w, r)
+	})
 }
 
 // init template index.html
