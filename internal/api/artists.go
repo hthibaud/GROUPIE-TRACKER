@@ -1,4 +1,4 @@
-package artists
+package api
 
 import (
 	"encoding/json"
@@ -6,26 +6,25 @@ import (
 )
 
 type Artist struct {
-	ID           int      `json:"id"`
-	Name         string   `json:"name"`
-	Image        string   `json:"image"`
-	Members      []string `json:"members"`
-	CreationDate int      `json:"creationDate"`
-	FirstAlbum   string   `json:"firstAlbum"`
-	Locations    string   `json:"locations"`
-	ConcertDates string   `json:"concertDates"`
-	Relations    string   `json:"relations"`
+	ID           int         `json:"id"`
+	Name         string      `json:"name"`
+	Image        string      `json:"image"`
+	Members      []string    `json:"members"`
+	CreationDate int         `json:"creationDate"`
+	FirstAlbum   string      `json:"firstAlbum"`
+	Locations    interface{} `json:"locations"`
+	ConcertDates interface{} `json:"concertDates"`
+	Relations    interface{} `json:"relations"`
 }
 
-func getArtists([]Artist, error) {
+func GetArtists() ([]Artist, error) {
 	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
-
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	var Artists []Artists
+	var artists []Artist
 	if err := json.NewDecoder(resp.Body).Decode(&artists); err != nil {
 		return nil, err
 	}
