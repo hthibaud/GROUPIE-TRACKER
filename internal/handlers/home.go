@@ -36,21 +36,21 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 
 // init template artists.html
 func Artists(w http.ResponseWriter, r *http.Request) {
-    artists, err := api.GetArtists()
-    if err != nil {
-        http.Error(w, "Erreur serveur", http.StatusInternalServerError)
-        return
-    }
+	artists, err := api.GetArtists()
+	if err != nil {
+		http.Error(w, "Erreur serveur", http.StatusInternalServerError)
+		return
+	}
 
-    tmpl, err := template.ParseFiles(
-        "web/templates/artists.html",
-    )
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-        return
-    }
+	tmpl, err := template.ParseFiles(
+		"web/templates/artists.html",
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-    tmpl.Execute(w, artists)
+	tmpl.Execute(w, artists)
 }
 
 // init template locations.html
