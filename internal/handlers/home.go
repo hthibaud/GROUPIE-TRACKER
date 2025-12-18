@@ -14,11 +14,35 @@ func Handler() {
 		}
 		NotFound(w, r)
 	})
+	http.HandleFunc("/artist", Artist)
+	http.HandleFunc("/artists", Artists)
+	http.HandleFunc("/locations", Locations)
+	http.HandleFunc("/gimstroll", Gimstroll)
 }
 
 // init template index.html
 func Home(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "index.html")
+}
+
+// init template artist.html
+func Artist(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "artist.html")
+}
+
+// init template artists.html
+func Artists(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "artists.html")
+}
+
+// init template locations.html
+func Locations(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "locations.html")
+}
+
+// init template gimstroll.html
+func Gimstroll(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "gimstroll.html")
 }
 
 func renderTemplate(w http.ResponseWriter, filename string) {
