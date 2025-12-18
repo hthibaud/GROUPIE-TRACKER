@@ -1,13 +1,12 @@
 package client
 
-type information struct {
-	id int
-	name string
-	picture string // peut etres on change
+type artists struct {
+	id             int
+	name           string
+	picture        string
 	dateOfCreation string
-	firstAlbum string
-	members []string
-	place string
-	showsDates string
-
+	firstAlbum     string
+	members        []string
+	place          string
+	showsDates     string
 }

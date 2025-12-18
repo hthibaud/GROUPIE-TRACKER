@@ -1,3 +1,11 @@
+package api
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+)
+
 func getApi(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 

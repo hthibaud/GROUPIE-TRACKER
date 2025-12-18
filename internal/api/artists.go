@@ -1,9 +1,21 @@
 package artists
 
-func GetArtists(w http.Response.Writer, r *http.request) {
-if r.Method != "GET" {
-        http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-        return
-    }
-    fmt.Fprintf(w, "Voici les items disponibles.")
+import (
+	"encoding/json"
+	"net/http"
+)
+
+func getArtists([]Artist, error) {
+	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var Artists []Artists
+	if err := json.NewDecoder(resp.Body).Decode(&artists); err != nil {
+		return nil, err
+	}
+	return artists, nil
 }
