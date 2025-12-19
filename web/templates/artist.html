@@ -29,9 +29,47 @@
 </head>
 
 <body class="bg-black">
-    <div class="bg-purple-600 p-6 text-black">
+    <header class="bg-purple-600 p-6 text-black">
         <h1 class="font-sekuya text-center text-8xl">*name of the artist*</h1>
         <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+
+        <img src="{{.Image}}"
+             alt="{{.Name}}"
+             class="w-full h-64 object-cover">
+
+        <div class="p-6">
+            <h1 class="text-3xl font-bold mb-4">
+                {{.Name}}
+            </h1>
+
+            <p class="text-gray-600 mb-2">
+                Création : {{.CreationDate}}
+            </p>
+
+            <p class="text-gray-600 mb-4">
+                Premier album : {{.FirstAlbum}}
+            </p>
+
+            <h2 class="font-semibold mb-2">Membres</h2>
+            <ul class="list-disc list-inside mb-6">
+                {{range .Members}}
+                    <li>{{.}}</li>
+                {{end}}
+            </ul>
+
+            <a href="/artists"
+               class="text-blue-600 hover:underline">
+                ← Retour à la liste
+            </a>
+        </div>
+
+    </div>
+
 </div>
 <footer class="bg-purple-600 p-6 text-black">
     <h1 class="font-sekuya text-center text-8xl">ONZER</h1>
