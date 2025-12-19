@@ -30,3 +30,17 @@ func GetArtists() ([]Artist, error) {
 	}
 	return artists, nil
 }
+
+func GetArtist() ([]Artist, error) {
+	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var artist []Artist
+	if err := json.NewDecoder(resp.Body).Decode(&artist); err != nil {
+		return nil, err
+	}
+	return artist, nil
+}
