@@ -36,19 +36,20 @@
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
     {{range .}}
-    <div class="bg-purple-600 rounded-xl shadow-md overflow-hidden hover-purple-700 transition"
-         id="artist-{{.ID}}">
+    <div class="bg-black rounded-xl overflow-hidden transition
+            ring-2 ring-purple-500/40
+            hover:ring-purple-500 hover:ring-4">
 
         <img src="{{.Image}}"
              alt="{{.Name}}"
              class="w-full h-48 object-cover">
 
         <div class="p-4 text-center">
-            <h3 class="text-xl font-sekuya">
+            <h3 class="text-xl text-purple-600 font-sekuya">
                 {{.Name}}
             </h3>
             <a href="/artist?id={{.ID}}"
-               class="inline-block mt-3 text-black hover:underline text-sm">
+               class="inline-block mt-3 text-purple-600 hover:underline text-sm">
                 track artist →
             </a>
         </div>
