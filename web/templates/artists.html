@@ -28,19 +28,23 @@
 
 </head>
 
-<body class="bg-black">
-  <div class="bg-purple-600 p-6 text-black">
+<body class = bg-black>
+
+  <header class="bg-purple-600 p-6 text-black mb-8">
     <h1 class="font-sekuya text-center text-8xl">ARTISTS</h1>
     <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
-  </div>
+  </header>
+
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> 
     {{range .}} 
     <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition" id="artist-{{.ID}}"> 
       <img src="{{.Image}}" alt="{{.Name}}" class="w-full h-48 object-cover"> 
       <div class="p-4"> 
+
         <h3 class="text-xl font-semibold mb-2"> 
           {{.Name}} 
         </h3> 
+
         <p class="text-sm text-gray-600"> 
           Création : {{.CreationDate}} 
         </p> 
@@ -67,5 +71,10 @@
   </div>
 </div>
 </div>
+
+<footer class="bg-purple-600 p-6 text-black mt-8">
+    <h1 class="font-sekuya text-center text-8xl">ONZER</h1>
+  </footer>
+
 </body>
 </html>
