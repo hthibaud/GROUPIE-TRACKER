@@ -31,12 +31,12 @@
 <body class="bg-black">
     <header class="bg-purple-600 p-6 text-black">
         <h1 class="font-sekuya text-center text-8xl">{{.Name}}</h1>
-        <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
+            <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
     </header>
 
     <div class="max-w-4xl mx-auto px-4 py-8">
 
-    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="bg-gray-900 rounded-xl shadow-md overflow-hidden">
 
         <img src="{{.Image}}"
              alt="{{.Name}}"
@@ -44,24 +44,24 @@
 
         <div class="p-6">
 
-            <p class="text-gray-600 mb-2">
-                Création : {{.CreationDate}}
+            <p class="font-dosis text-gray-300 mb-2">
+                Creation date : {{.CreationDate}}
             </p>
 
-            <p class="text-gray-600 mb-4">
-                Premier album : {{.FirstAlbum}}
+            <p class="font-dosis text-gray-300 mb-4">
+                First album : {{.FirstAlbum}}
             </p>
 
-            <h2 class="font-semibold mb-2">Membres</h2>
-            <ul class="list-disc list-inside mb-6">
+            <h2 class="font-sekuya text-white bold mb-2">Members</h2>
+            <ul class="font-dosis text-white list-disc list-inside mb-6">
                 {{range .Members}}
                     <li>{{.}}</li>
                 {{end}}
             </ul>
 
             <a href="/artists"
-               class="text-blue-600 hover:underline">
-                ← Retour à la liste
+               class="font-dosis text-purple-600 hover:underline">
+                ← Back to the artists page
             </a>
         </div>
 
