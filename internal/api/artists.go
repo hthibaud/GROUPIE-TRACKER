@@ -33,7 +33,7 @@ func GetArtists() ([]Artist, error) {
 }
 
 func GetArtist(id int) (Artist, error) {
-	url := fmt.Sprintf("https://groupietrackers.herokuapp.com/api/artist/%d", id)
+	url := fmt.Sprintf("https://groupietrackers.herokuapp.com/api/artists/%d", id)
 	resp, err := http.Get(url)
 	if err != nil {
 		return Artist{}, err
