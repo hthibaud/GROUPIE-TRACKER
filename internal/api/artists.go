@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -31,16 +32,17 @@ func GetArtists() ([]Artist, error) {
 	return artists, nil
 }
 
-func GetArtist() ([]Artist, error) {
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
+func GetArtist(id int) (Artist, error) {
+	url := fmt.Sprintf("https://groupietrackers.herokuapp.com/api/artist/%d", id)
+	resp, err := http.Get(url)
 	if err != nil {
-		return nil, err
+		return Artist{}, err
 	}
 	defer resp.Body.Close()
 
-	var artist []Artist
+	var artist Artist
 	if err := json.NewDecoder(resp.Body).Decode(&artist); err != nil {
-		return nil, err
+		return Artist{}, err
 	}
 	return artist, nil
 }

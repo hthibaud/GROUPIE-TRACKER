@@ -1,10 +1,9 @@
 package handlers
 
 import (
+	"GROUPIE-TRACKER/internal/api"
 	"html/template"
 	"net/http"
-
-	"GROUPIE-TRACKER/internal/api"
 )
 
 // prepare handler function permite switch enter the all page of the website
@@ -32,7 +31,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 // init template artist.html
 func Artist(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "artist.html")
-		artist, err := api.GetArtist()
+	artist, err := api.GetArtist()
 	if err != nil {
 		http.Error(w, "Erreur serveur", http.StatusInternalServerError)
 		return
@@ -48,7 +47,6 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 
 	tmpl.Execute(w, artist)
 }
-
 
 // init template artists.html
 func Artists(w http.ResponseWriter, r *http.Request) {
