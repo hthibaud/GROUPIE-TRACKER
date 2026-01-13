@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Sekuya&display=swap" rel="stylesheet">
 
-  <style>
-    .font-dosis {
-      font-family: 'Dosis', sans-serif;
-    }
-    .font-sekuya {
-        font-family: 'Sekuya', sans-serif;
-    }
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sekuya&display=swap" rel="stylesheet">
+
+
+    <style>
+        .font-dosis {
+            font-family: 'Dosis', sans-serif;
+        }
+
+        .font-sekuya {
+            font-family: 'Sekuya', sans-serif;
+        }
     </style>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Artists</title>
-    
+
     <link rel="icon" type="image/png" href="/static/img/canette.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,45 +34,63 @@
 <body class="bg-black">
     <header class="bg-purple-600 p-6 text-black">
         <h1 class="font-sekuya text-center text-8xl">{{.Name}}</h1>
-            <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
+        <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
     </header>
 
     <div class="max-w-4xl mx-auto px-4 py-8">
 
-    <div class="bg-gray-900 rounded-xl shadow-md overflow-hidden">
+        <div class="bg-gray-900 rounded-xl shadow-md overflow-hidden">
 
-        <img src="{{.Image}}"
-             alt="{{.Name}}"
-             class="w-full h-64 object-cover">
+            <img src="{{.Image}}" alt="{{.Name}}" class="w-full h-64 object-cover">
 
-        <div class="p-6">
+            <div class="p-6">
 
-            <p class="font-dosis text-gray-300 mb-2">
-                Creation date : {{.CreationDate}}
-            </p>
+                <p class="font-dosis text-gray-300 mb-2">
+                    Creation date : {{.CreationDate}}
+                </p>
 
-            <p class="font-dosis text-gray-300 mb-4">
-                First album : {{.FirstAlbum}}
-            </p>
+                <p class="font-dosis text-gray-300 mb-4">
+                    First album : {{.FirstAlbum}}
+                </p>
 
-            <h2 class="font-sekuya text-white bold mb-2">Members</h2>
-            <ul class="font-dosis text-white list-disc list-inside mb-6">
-                {{range .Members}}
+                <h2 class="font-sekuya text-white bold mb-2">Members</h2>
+                <ul class="font-dosis text-white list-disc list-inside mb-6">
+                    {{range .Members}}
                     <li>{{.}}</li>
-                {{end}}
-            </ul>
+                    {{end}}
+                </ul>
+                <h2 class="font-sekuya text-white mb-4">Shows</h2>
 
-            <a href="/artists"
-               class="font-dosis text-purple-600 hover:underline">
-                ← Back to the artists page
-            </a>
+                <div class="space-y-4">
+                    {{range $location, $dates := .Relations}}
+
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <h3 class="font-dosis text-purple-400 text-xl">
+                            {{ $location }}
+                        </h3>
+
+                        <ul class="font-dosis text-gray-300 list-disc list-inside mt-2">
+                            {{range $dates}}
+                            <li>{{.}}</li>
+                            {{end}}
+                        </ul>
+                    </div>
+
+                    {{end}}
+                </div>
+                <a href="/artists" class="font-dosis text-purple-600 hover:underline">
+                    ← Back to the artists page
+                </a>
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
     <footer class="bg-purple-600 p-6 text-black">
         <h1 class="font-sekuya text-center text-8xl">ONZER</h1>
     </footer>
 </body>
+
 </html>
