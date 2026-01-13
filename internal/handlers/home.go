@@ -44,21 +44,35 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// calling the API
+	//calling the API
 	artist, err := api.GetArtist(id)
 	if err != nil {
 		http.Error(w, "Artiste non trouvé", http.StatusInternalServerError)
 		return
 	}
+	//Relations API
+	relations, err := api.GetRelations(artist.RelationsURL)
+	if err != nil {
+		http.Error(w, "Relations non trouvées", http.StatusInternalServerError)
+		return
+	}
 
-	// send the data to the HTML page
+	page := struct {
+		api.Artist
+		Relations map[string][]string
+	}{
+		Artist:    artist,
+		Relations: relations.DatesLocations,
+	}
+
+	// Template
 	tmpl, err := template.ParseFiles("web/templates/artist.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	tmpl.Execute(w, artist)
+	tmpl.Execute(w, page)
 }
 
 // init template artists.html
