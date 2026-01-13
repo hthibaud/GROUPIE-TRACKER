@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"GROUPIE-TRACKER/internal/api"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -57,12 +58,14 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println("Relations:", relations.DatesLocations)
+
 	page := struct {
 		api.Artist
-		Relations map[string][]string
+		Shows map[string][]string
 	}{
-		Artist:    artist,
-		Relations: relations.DatesLocations,
+		Artist: artist,
+		Shows:  relations.DatesLocations,
 	}
 
 	// Template
