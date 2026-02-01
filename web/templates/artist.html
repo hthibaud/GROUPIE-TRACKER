@@ -60,7 +60,16 @@
                     {{end}}
                 </ul>
                 <h2 class="font-sekuya text-white mb-4">Shows</h2>
-                <p class="font-dosis text-white bold mb-4 ">{{.Relations}}</p>
+                <div class="font-dosis text-white space-y-2">
+                    {{range $city, $dates := .Shows}}
+                    <div>
+                        <strong>{{ $city }}:</strong>
+                        {{range $index, $date := $dates}}
+                        {{if $index}}, {{end}}{{ $date }}
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
 
                 <a href="/artists" class="font-dosis text-purple-600 hover:underline">
                     ← Back to the artists page
@@ -72,7 +81,7 @@
 
     </div>
 
-      <footer class="bg-purple-600 p-6 text-black">
+    <footer class="bg-purple-600 p-6 text-black">
         <h1 class="font-sekuya text-center text-8xl">ONZER</h1>
     </footer>
 
