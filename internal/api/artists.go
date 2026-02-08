@@ -15,7 +15,7 @@ type Artist struct {
 	FirstAlbum   string      `json:"firstAlbum"`
 	Locations    interface{} `json:"locations"`
 	ConcertDates interface{} `json:"concertDates"`
-	Relations    interface{} `json:"relations"`
+	RelationsURL string      `json:"relations"`
 }
 
 func GetArtists() ([]Artist, error) {

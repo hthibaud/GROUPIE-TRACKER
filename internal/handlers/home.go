@@ -2,14 +2,14 @@ package handlers
 
 import (
 	"GROUPIE-TRACKER/internal/api"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
 	"strings"
-	"fmt"
 )
 
-// prepare handler function permite switch enter the all page of the website
+// Handler initializes the routes
 func Handler() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
@@ -26,12 +26,12 @@ func Handler() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 }
 
-// init template index.html
+// Home renders the index page
 func Home(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "index.html")
 }
 
-// init template artist.html
+// Artist renders the details of one artist with relations
 func Artist(w http.ResponseWriter, r *http.Request) {
 	// Récupérer l'id depuis l'URL
 	idStr := r.URL.Query().Get("id")
@@ -46,24 +46,40 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// calling the API
+	//calling the API
 	artist, err := api.GetArtist(id)
 	if err != nil {
 		http.Error(w, "Artiste non trouvé", http.StatusInternalServerError)
 		return
 	}
+	//Relations API
+	relations, err := api.GetRelations(artist.RelationsURL)
+	if err != nil {
+		http.Error(w, "Relations non trouvées", http.StatusInternalServerError)
+		return
+	}
 
-	// send the data to the HTML page
+	fmt.Println("Relations:", relations.DatesLocations)
+
+	page := struct {
+		api.Artist
+		Shows map[string][]string
+	}{
+		Artist: artist,
+		Shows:  relations.DatesLocations,
+	}
+
+	// Template
 	tmpl, err := template.ParseFiles("web/templates/artist.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	tmpl.Execute(w, artist)
+	tmpl.Execute(w, page)
 }
 
-// init template artists.html
+// Artists renders the list of artists with filters
 func Artists(w http.ResponseWriter, r *http.Request) {
 	artists, err := api.GetArtists()
 	if err != nil {
@@ -71,73 +87,90 @@ func Artists(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// --- FILTRAGE MINIMALISTE ---
 	filtered := []api.Artist{}
 	q := r.URL.Query()
-	
+
 	for _, a := range artists {
 		keep := true
 
-		// Nom
-		if s := q.Get("search"); s != "" && !strings.Contains(strings.ToLower(a.Name), strings.ToLower(s)) { keep = false }
-		
-		// Création (Année)
-		if min := q.Get("creation_min"); keep && min != "" {
-			if v, _ := strconv.Atoi(min); a.CreationDate < v { keep = false }
-		}
-		if max := q.Get("creation_max"); keep && max != "" {
-			if v, _ := strconv.Atoi(max); a.CreationDate > v { keep = false }
+		// Search by Name
+		if s := q.Get("search"); s != "" && !strings.Contains(strings.ToLower(a.Name), strings.ToLower(s)) {
+			keep = false
 		}
 
-		// 1er Album (Année - extraction simple depuis dd-mm-yyyy)
+		// Filter by Creation Date
+		if min := q.Get("creation_min"); keep && min != "" {
+			if v, _ := strconv.Atoi(min); a.CreationDate < v {
+				keep = false
+			}
+		}
+		if max := q.Get("creation_max"); keep && max != "" {
+			if v, _ := strconv.Atoi(max); a.CreationDate > v {
+				keep = false
+			}
+		}
+
+		// Filter by First Album Year
 		if keep && (q.Get("album_min") != "" || q.Get("album_max") != "") {
 			parts := strings.Split(a.FirstAlbum, "-")
 			if len(parts) == 3 {
 				y, _ := strconv.Atoi(parts[2])
 				if min := q.Get("album_min"); min != "" {
-					if v, _ := strconv.Atoi(min); y < v { keep = false }
+					if v, _ := strconv.Atoi(min); y < v {
+						keep = false
+					}
 				}
 				if max := q.Get("album_max"); max != "" {
-					if v, _ := strconv.Atoi(max); y > v { keep = false }
+					if v, _ := strconv.Atoi(max); y > v {
+						keep = false
+					}
 				}
 			}
 		}
 
-		// Membres
+		// Filter by Members
 		if members := q["members"]; keep && len(members) > 0 {
 			found := false
 			for _, m := range members {
-				if strconv.Itoa(len(a.Members)) == m { found = true; break }
+				if strconv.Itoa(len(a.Members)) == m {
+					found = true
+					break
+				}
 			}
-			if !found { keep = false }
+			if !found {
+				keep = false
+			}
 		}
 
-		// Lieux (Recherche textuelle simple)
+		// Filter by Location
 		if loc := q.Get("location"); keep && loc != "" {
-			if !strings.Contains(strings.ToLower(fmt.Sprintf("%v", a.Locations)), strings.ToLower(loc)) { keep = false }
+			if !strings.Contains(strings.ToLower(fmt.Sprintf("%v", a.Locations)), strings.ToLower(loc)) {
+				keep = false
+			}
 		}
 
-		if keep { filtered = append(filtered, a) }
+		if keep {
+			filtered = append(filtered, a)
+		}
 	}
-	// ----------------------------
 
-	tmpl, err := template.ParseFiles("web/templates/artists.html")
+	tmpl, err := template.ParseFiles(
+		"web/templates/artists.html",
+	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// On envoie 'filtered' au lieu de 'artists'
-	// Comme c'est toujours une liste, pas besoin de changer le {{range .}} dans le HTML !
 	tmpl.Execute(w, filtered)
 }
 
-// init template locations.html
+// Locations renders the locations page
 func Locations(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "locations.html")
 }
 
-// init template gimstroll.html
+// Gimstroll renders the easter egg page
 func Gimstroll(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "gimstroll.html")
 }

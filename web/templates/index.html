@@ -23,20 +23,43 @@
   <title>Home</title>
 
   <link rel="icon" type="image/png" href="/static/img/cannette.png">
+  <link rel="background" type="image/png" href="/static/img/blurred-artists.png">
 
 </head>
 
-<body class="bg-black">
+
+<body class="min-h-screen
+             bg-[url('/static/img/blurred-artists.png')]
+             bg-cover bg-center bg-no-repeat">
+
   <header class="bg-purple-600 p-6 text-black">
     <h1 class="font-sekuya text-center text-8xl font-bold">ONZER</h1>
     <h6 class="font-dosis text-center text-3xl">BE A TRACKER OF MUSIC.</h6>
   </header>
 
-  <div class="flex justify-center mt-10">
-    <a href="/artists"
-       class="font-dosis bg-purple-600 hover:bg-purple-800 text-3xl font-bold py-3 px-6 rounded-lg shadow-lg transition">
-       TRACK MUSIC with ONZER
+ <div class="flex justify-center items-center mt-64">
+  <a href="/artists"
+     class="font-dosis text-3xl font-bold py-3 px-6 rounded-lg shadow-lg 
+            bg-purple-600 hover:bg-purple-800 
+            relative overflow-hidden
+            glow-btn transition">
+       TRACK ARTISTS
     </a>
   </div>
+
+<style>
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px #6b21a8, 0 0 20px #6b21a8, 0 0 30px #6b21a8;
+  }
+  50% {
+    box-shadow: 0 0 20px #4d1d95, 0 0 40px #4c1d95, 0 0 60px #4c1d95;
+  }
+}
+
+.glow-btn {
+  animation: glow 2s infinite alternate;
+}
+</style>
 </body>
 </html>
