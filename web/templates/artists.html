@@ -30,20 +30,80 @@
 
 </head>
 
-<body class=bg-black>
+<body class="bg-black text-white">
+  
   <header class="bg-purple-600 p-6 text-black mb-8">
     <h1 class="font-sekuya text-center text-8xl">ARTISTS</h1>
     <h6 class="font-dosis text-center text-3xl">ONZER - BE A TRACKER OF MUSIC.</h6>
   </header>
-   <form class="text-center text-white">
-  <label for="fname" class="block text-purple-600 font-dosis mb-2 text-sm uppercase tracking-widest">Search Artist</label><br>
-  <input type="text" id="fname" name="fname">
-</form> 
-<br>
+
+  <form action="/artists" method="GET" class="max-w-7xl mx-auto px-4 mb-10 font-dosis">
+    
+    <div class="bg-purple-900/30 border border-purple-500/30 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+      <h2 class="font-sekuya text-3xl mb-6 text-purple-400">Recherche</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div>
+          <label class="block mb-2 text-sm uppercase tracking-widest text-purple-300">Nom</label>
+          <input type="text" name="search" 
+                 class="w-full bg-black/50 border border-purple-500/50 rounded px-4 py-2 focus:outline-none focus:border-purple-400 transition" 
+                 placeholder="Ex: Queen...">
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm uppercase tracking-widest text-purple-300">Lieu</label>
+          <input type="text" name="location" 
+                 class="w-full bg-black/50 border border-purple-500/50 rounded px-4 py-2 focus:outline-none focus:border-purple-400 transition" 
+                 placeholder="Ex: London...">
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm uppercase tracking-widest text-purple-300">Année Création</label>
+          <div class="flex gap-2">
+            <input type="number" name="creation_min" class="w-1/2 bg-black/50 border border-purple-500/50 rounded px-2 py-2 text-center" placeholder="Min">
+            <input type="number" name="creation_max" class="w-1/2 bg-black/50 border border-purple-500/50 rounded px-2 py-2 text-center" placeholder="Max">
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm uppercase tracking-widest text-purple-300">Année 1er Album</label>
+          <div class="flex gap-2">
+            <input type="number" name="album_min" class="w-1/2 bg-black/50 border border-purple-500/50 rounded px-2 py-2 text-center" placeholder="Min">
+            <input type="number" name="album_max" class="w-1/2 bg-black/50 border border-purple-500/50 rounded px-2 py-2 text-center" placeholder="Max">
+          </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 lg:col-span-4 border-t border-purple-500/30 pt-4 mt-2">
+           <label class="block mb-3 text-sm uppercase tracking-widest text-purple-300">Nombre de membres</label>
+           <div class="flex flex-wrap gap-4 items-center">
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="1" class="mr-2 accent-purple-600">1</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="2" class="mr-2 accent-purple-600">2</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="3" class="mr-2 accent-purple-600">3</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="4" class="mr-2 accent-purple-600">4</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="5" class="mr-2 accent-purple-600">5</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="6" class="mr-2 accent-purple-600">6</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="7" class="mr-2 accent-purple-600">7</label>
+              <label class="cursor-pointer hover:text-purple-400"><input type="checkbox" name="members" value="8" class="mr-2 accent-purple-600">8+</label>
+           </div>
+        </div>
+
+      </div>
+
+      <div class="mt-6 text-center">
+        <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-black font-bold py-2 px-10 rounded-full shadow-lg transition transform hover:scale-105">
+          FILTRER LES RÉSULTATS
+        </button>
+        <div class="mt-2">
+           <a href="/artists" class="text-purple-400 hover:text-white underline text-sm">Tout réinitialiser</a>
+        </div>
+      </div>
+    </div>
+  </form>
+
   <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {{range .}}
-    <div
-      class="relative bg-black rounded-xl overflow-hidden transition ring-2 ring-purple-500/40 hover:ring-purple-500 hover:ring-4">
+    <div class="relative bg-black rounded-xl overflow-hidden transition ring-2 ring-purple-500/40 hover:ring-purple-500 hover:ring-4">
 
       <img src="{{.Image}}" alt="{{.Name}}" class="w-full h-48 object-cover">
 
@@ -59,10 +119,6 @@
     </div>
     {{end}}
   </div>
-
-  <footer class="bg-purple-600 p-6 text-black mt-8">
-    <h1 class="font-sekuya text-center text-8xl">ONZER</h1>
-  </footer>
 
 </body>
 
