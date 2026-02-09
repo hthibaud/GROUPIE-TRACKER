@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sekuya&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         .font-dosis {
@@ -80,6 +80,38 @@
         </div>
 
     </div>
+
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Lieux de Concert</h1>
+        
+        <div id="map" class="h-[500px] w-full rounded-xl shadow-2xl border-2 border-gray-700"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // initialises the map
+        const map = L.map('map').setView([46.603354, 1.888334], 5);
+
+        // adding a background map (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // examples
+        const locations = [
+            { name: "Paris, France", coords: [48.8566, 2.3522] },
+            { name: "London, UK", coords: [51.5074, -0.1278] },
+            { name: "New York, USA", coords: [40.7128, -74.0060] }
+        ];
+
+        // adds markers
+        locations.forEach(loc => {
+            L.marker(loc.coords)
+                .addTo(map)
+                .bindPopup(`<b>${loc.name}</b><br>Prochain concert ici !`);
+        });
+    </script>
 
     <footer class="bg-purple-600 p-6 text-black">
         <h1 class="font-sekuya text-center text-8xl">ONZER</h1>

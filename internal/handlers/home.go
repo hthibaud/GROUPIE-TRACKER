@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"GROUPIE-TRACKER/internal/api"
+	"GROUPIE-TRACKER/internal/utils"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -33,7 +34,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 // Artist renders the details of one artist with relations
 func Artist(w http.ResponseWriter, r *http.Request) {
-	// Récupérer l'id depuis l'URL
+	// take the ID from the URL
 	idStr := r.URL.Query().Get("id")
 	if idStr == "" {
 		http.Error(w, "ID manquant", http.StatusBadRequest)
@@ -59,14 +60,20 @@ func Artist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("Relations:", relations.DatesLocations)
+	//for JS
+	var cities []string
+	for city := range relations.DatesLocations {
+		cities = append(cities, city)
+	}
+
+	cleanedShows := utils.CleanLocations(relations.DatesLocations)
 
 	page := struct {
 		api.Artist
 		Shows map[string][]string
 	}{
 		Artist: artist,
-		Shows:  relations.DatesLocations,
+		Shows:  cleanedShows, // using the clean map
 	}
 
 	// Template
